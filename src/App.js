@@ -37,6 +37,15 @@ class App extends Component {
 		})
 	}
 
+	goPrevious(search) {
+		this.setState({
+			after: null,
+			before: search.pageInfo.startCursor,
+			first: null,
+			last: PER_PAGE
+		})
+	}
+
 	render() {
 		const { after, before, first, last, query } = this.state
 		console.log({query})
@@ -76,7 +85,16 @@ class App extends Component {
 											})
 										}
 									</ul>
-
+									{
+										search.pageInfo.hasPreviousPage === true ?
+											<button 
+												onClick={this.goPrevious.bind(this, search)}
+											>
+												Previous
+											</button>
+											:
+											null
+									}
 									{
 										search.pageInfo.hasNextPage === true ?
 											<button 
