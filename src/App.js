@@ -5,9 +5,16 @@ import client from './client'
 import { SEARCH_REPOSITORIES } from './graphql'
 
 const StarButton = props => {
-	const totalCount = props.node.stargazers.totalCount
-	return <button>{totalCount === 1 ? "1 star" : `${totalCount} stars` }</button>
-
+	const node = props.node
+	const totalCount = node.stargazers.totalCount
+	const viewerHasStarred = node.viewerHasStarred
+	const starCount = totalCount === 1 ? "1 star" : `${totalCount} stars`
+	const hasStarred = viewerHasStarred === true ? "starrd" : "-"
+	return (
+		<button>
+			{starCount} | {hasStarred}
+		</button>
+	)
 }
 
 const PER_PAGE = 5
