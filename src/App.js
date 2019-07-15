@@ -61,7 +61,7 @@ const DEFAULT_STATE = {
 	before: null,
 	first: PER_PAGE,
 	last: null,
-	query: "フロントエンドエンジニア"
+	query: ""
 }
 
 class App extends Component {
@@ -69,13 +69,14 @@ class App extends Component {
 		super(props)
 		this.state = DEFAULT_STATE
 
-		this.handleChange = this.handleChange.bind(this)
+		this.myRef = React.createRef()
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	handleChange(event) {
+	handleSubmit(event) {
+		event.preventDefault()
 		this.setState({
-			...DEFAULT_STATE,
-			query: event.target.value
+			query: this.myRef.current.value
 		})
 	}
 
@@ -102,8 +103,9 @@ class App extends Component {
 
   	return (
 			<ApolloProvider client={client}>
-			<form>
-				<input value={query} onChange={this.handleChange} />
+			<form onSubmit={this.handleSubmit}>
+				<input ref={this.myRef} />
+				<input type="submit" value="submit" />
 			</form>
 
 				<Query 
